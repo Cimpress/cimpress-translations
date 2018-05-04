@@ -17,7 +17,7 @@ npm install --save cimpress-translations
 
 Require the module with:
 ```
-const TranslationsClient = require("cimpress-translations");
+const { TranslationsClient } = require("cimpress-translations");
 ```
 
 ## Consuming the API
