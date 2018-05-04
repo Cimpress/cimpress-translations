@@ -23,7 +23,7 @@ const { TranslationsClient } = require("cimpress-translations");
 ## Consuming the API
 
 ##### new TranslationsClient(url, auth)
-Instantiates a new client. **auth** may be a string or a synchronous/asynchronous function returning a string.
+Instantiates a new client. Pass *null* for **url** to use the default service URL. **auth** may be a string or a synchronous/asynchronous function returning a string.
 
 ##### client.listServices()
 Lists all services for which you can access translations.
@@ -86,7 +86,7 @@ The requested language was not found amongst languages specified in ISO-639-2.
 * [request-promise-native](https://github.com/request/request-promise-native) - HTTP request client
 * [https-status-codes](https://github.com/prettymuchbryce/node-http-status) - HTTP status codes
 * [jest](https://github.com/facebook/jest) - Node.js code testing framework
-* [iso-639](https://github.com/haliaeetus/iso-639) - ISO 630 language codes in a Node.js module
+* [iso-639](https://github.com/haliaeetus/iso-639) - ISO 639 language codes in a Node.js module
 
 ## Contributing
 
