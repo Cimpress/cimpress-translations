@@ -26,7 +26,7 @@ const requestCatch = err => {
   throw buildError("EGENERIC");
 };
 
-class TranslationsClient {
+class CimpressTranslationsClient {
   constructor(url, auth) {
     this.url = url || API.url;
     this.auth = auth;
@@ -88,6 +88,6 @@ class TranslationsClient {
   }
 }
 
-TranslationsClient.API = API;
+CimpressTranslationsClient.API = API;
 
-module.exports = TranslationsClient;
+module.exports = CimpressTranslationsClient;

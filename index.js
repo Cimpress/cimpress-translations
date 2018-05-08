@@ -1,6 +1,6 @@
 "use strict";
 
-const client = require("./src/client");
+const CimpressTranslationsClient = require("./src/client");
 const errors = require("./src/errors");
 
-module.exports = { client, errors };
+module.exports = { CimpressTranslationsClient, errors };

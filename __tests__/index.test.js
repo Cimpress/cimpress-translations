@@ -8,16 +8,16 @@ const paths = {
   client: "../src/client"
 };
 
-const TranslationsClient = require(paths.client);
-const API = TranslationsClient.API;
+const CimpressTranslationsClient = require(paths.client);
+const API = CimpressTranslationsClient.API;
 
 const TEST_URL = "http://myservice.com";
 const TEST_ID = "TEST_ID";
 const TEST_LANGUAGE = "English";
 const TEST_REPLY = "TEST_REPLY";
-const client = new TranslationsClient(TEST_URL, () => null);
+const client = new CimpressTranslationsClient(TEST_URL, () => null);
 
-describe("for TranslationsClient", () => {
+describe("for CimpressTranslationsClient", () => {
   describe("for listServices()", () => {
     afterEach(nock.cleanAll);
 
