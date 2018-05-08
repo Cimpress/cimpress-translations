@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+- '8'
+install:
+- npm install
+script:
+- npm test
+deploy:
+  provider: npm
+  email: igor@sowinski.blue
+  on:
+    branch: master
+  api_key:
+    secure: pt5BBxkIa57gMNfqrqP0CwnvqhHdjc8wByTNmb+EvPgyQycs7x3nnNdmY8UPtRKgUXj9oNzuU0zDJGd1rFIO8LpRmSKdVimG5uy1euYMfUvxW26TC7tHkPiK+X7CgkfN5OE3EY4OpkvS2AxkrM5ez4o91c9yFwAkb+k9FoMz0MQBDbFrqAluEYQz5SyiOWDfNsKUyWZggsn1AgCOWALXXhJGqDeIX2oVQ7nwp4BdzibJ14jxQOjx7F54QteeW1wPBZXn0BGx+KQGmwQGqBqph99kDxPPacNAkD7eE86nrWIPET/o7hNT5TRzr6g6Dw8A2IngGM3y2DJplHCgFC76zsavSSB+ExynsaKFHWHnKjv9PFHDSV8nejrN5A4GU182ALRm895l8Ej/OWmPohZIUXVcgUZB0IQX8DwXgfXE00JY6fm7ArxRmvpD4Y2EdxqprO8Y2LvaniK7HUuan2BYc/hUJ7acS5k33Q/45bnqv95LgcQsQjYMyg4oK27+g7L/ZPxDHuodPcxdmYPDGEHwwgReSi3HduB6KhehDYjzvTrhCVjJbtRHxJElUXfTzq7IO8u+QpGP74FFMkhQSynX9hp+RC+V01KJJDbl3b8WRF1v6ZUt1S5PlQot5X5BHLae6kMxKsalV8/vg7fTXXaGoKz9FUUFIA+KAzWSYImw+Hs=
