@@ -1,5 +1,7 @@
 # cimpress-translations
 
+[![npm version](https://badge.fury.io/js/cimpress-translations.svg)](https://badge.fury.io/js/cimpress-translations)
+
 cimpress-translations is a convenient client for Cimpress' Translations service.
 
 Features:
