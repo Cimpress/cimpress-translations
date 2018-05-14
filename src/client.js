@@ -54,7 +54,8 @@ class CimpressTranslationsClient {
 
   async listServices() {
     let options = {
-      url: this.buildUrl(API.v1Services)
+      url: this.buildUrl(API.v1Services),
+      json: true
     };
 
     await this.addAuth(options);
@@ -64,7 +65,8 @@ class CimpressTranslationsClient {
 
   async describeService(serviceId) {
     let options = {
-      url: this.buildUrl(API.v1ServicesId, { id: serviceId })
+      url: this.buildUrl(API.v1ServicesId, { id: serviceId }),
+      json: true
     };
 
     await this.addAuth(options);
@@ -79,7 +81,8 @@ class CimpressTranslationsClient {
     }
 
     let options = {
-      url: this.buildUrl(API.v1ServicesIdLanguage, { id: serviceId, language: languageCode })
+      url: this.buildUrl(API.v1ServicesIdLanguage, { id: serviceId, language: languageCode }),
+      json: true
     };
 
     await this.addAuth(options);
