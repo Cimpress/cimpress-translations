@@ -19,13 +19,13 @@ npm install --save cimpress-translations
 
 Require the module with:
 ```
-const { TranslationsClient } = require("cimpress-translations");
+const { CimpressTranslationsClient } = require("cimpress-translations");
 ```
 
 ## Consuming the API
 
-##### new TranslationsClient(url, auth)
-Instantiates a new client. Pass *null* for **url** to use the default service URL. **auth** may be a string or a synchronous/asynchronous function returning a string.
+##### new CimpressTranslationsClient(url, auth)
+Instantiates a new client. Pass *null* for **url** to use the default service URL. **auth** may be a string or a synchronous/asynchronous function returning a string. If it's a string, it should follow the format *Bearer <JWT Token>*.
 
 ##### client.listServices()
 Lists all services for which you can access translations.
@@ -96,13 +96,13 @@ Have you benefited from this library? Have you found or fixed a bug? Would you l
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
 * **Igor Sowinski** <[isowinski@cimpress.com](mailto:isowinski@cimpress.com), [igor@sowinski.blue](mailto:igor@sowinski.blue)> - [GitHub](https://github.com/Igrom)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/Cimpress/cimpress-translations/graphs/contributors) who participated in this project.
 
 ## License
 
