@@ -39,6 +39,7 @@ class CimpressTranslationsClient {
   async addAuth(options) {
     let auth = await this.getAuth();
     if (auth) {
+      auth = auth.startsWith('Bearer ') ? auth : 'Bearer ' + auth;
       options.headers = Object.assign(options.headers || {}, {
         Authorization: auth
       });
