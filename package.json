@@ -2,8 +2,10 @@
   "name": "cimpress-translations",
   "version": "2.0.1",
   "description": "Lightweight client for the Translations Service",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
+    "build": "babel src -d lib",
+    "prepublish": "npm run build",
     "test": "jest"
   },
   "repository": {
@@ -26,6 +28,10 @@
   },
   "homepage": "https://github.com/Cimpress/cimpress-translations#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "jest": "^22.4.3",
     "nock": "^9.2.5"
   },

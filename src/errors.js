@@ -13,4 +13,4 @@ const buildError = name => {
   return err;
 };
 
-module.exports = { ...errors, buildError };
+module.exports = Object.assign(errors, {buildError});
