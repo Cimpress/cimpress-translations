@@ -11,6 +11,7 @@ const API = {
   url: "https://api.translations.cimpress.io",
   v1Services: "/v1/services",
   v1ServicesId: "/v1/services/{{id}}",
+  v1ServicesIdStructure: "/v1/services/{{id}}/structure",
   v1ServicesIdLanguage: "/v1/services/{{id}}/blobs/{{language}}",
 };
 
@@ -83,6 +84,19 @@ class CimpressTranslationsClient {
 
     let options = {
       url: this.buildUrl(API.v1ServicesIdLanguage, { id: serviceId, language: languageCode }),
+      json: true
+    };
+
+    await this.addAuth(options);
+    return rp(options)
+      .catch(requestCatch);
+  }
+
+  async patchStructure(serviceId, structurePatch) {
+    let options = {
+      method: 'PATCH',
+      url: this.buildUrl(API.v1ServicesIdStructure, { id: serviceId }),
+      body: structurePatch,
       json: true
     };
 
