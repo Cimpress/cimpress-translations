@@ -5,7 +5,7 @@ const { pope } = require("pope");
 const httpStatus = require("http-status-codes");
 
 const { buildError } = require("./errors");
-const { findLanguageCode } = require("./language");
+const { findLanguage, findLanguageCode } = require("./language");
 
 const API = {
   url: "https://api.translations.cimpress.io",
@@ -83,6 +83,37 @@ class CimpressTranslationsClient {
 
     let options = {
       url: this.buildUrl(API.v1ServicesIdLanguage, { id: serviceId, language: languageCode }),
+      json: true
+    };
+
+    await this.addAuth(options);
+    return rp(options)
+      .catch(requestCatch);
+  }
+
+  async putLanguageBlob(serviceId, language, blob) {
+    let languageObject = findLanguage(language);
+
+    // validate that language was found and fields required to form the REST request are present
+    if (!(languageObject && languageObject["639-2"] && languageObject.en && Array.isArray(languageObject.en) && languageObject.en.length > 0)) {
+      throw buildError("ENOLANG");
+    }
+
+    let languageCode = languageObject["639-2"];
+    let shortLanguageCode = languageObject["639-1"];
+    let requestBody = {
+      blob: blob,
+      metadata: {
+        name: languageObject.en[0],
+        shortName: languageCode,
+        nativeName: shortLanguageCode && languageObject[shortLanguageCode] && languageObject[shortLanguageCode][0] || languageObject.en[0]
+      }
+    };
+
+    let options = {
+      method: "PUT",
+      url: this.buildUrl(API.v1ServicesIdLanguage, { id: serviceId, language: languageCode }),
+      body: requestBody,
       json: true
     };
 

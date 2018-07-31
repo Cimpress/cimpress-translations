@@ -14,6 +14,7 @@ const API = CimpressTranslationsClient.API;
 const TEST_URL = "http://myservice.com";
 const TEST_ID = "TEST_ID";
 const TEST_LANGUAGE = "English";
+const TEST_BLOB = { testBlobKey: "testBlobValue" };
 const TEST_REPLY = "TEST_REPLY";
 const client = new CimpressTranslationsClient(TEST_URL, () => null);
 
@@ -98,6 +99,39 @@ describe("for CimpressTranslationsClient", () => {
       } catch (err) {
         assert.equal(err.name, "ENOLANG");
       }
+    });
+  });
+
+  describe("for putLanguageBlob()", () => {
+    afterEach(nock.cleanAll);
+
+    it("throws ENOLANG if language is unrecognized", async () => {
+      try {
+        let response = await client.putLanguageBlob(TEST_ID, "Cimpress", TEST_BLOB);
+      } catch (err) {
+        assert.equal(err.name, "ENOLANG");
+      }
+    });
+
+    it("returns the successful response and validates the request body", async () => {
+      let expectedRequestBody = {
+        blob: TEST_BLOB,
+        metadata: {
+          name: "German",
+          shortName: "deu",
+          nativeName: "Deutsch"
+        }
+      };
+
+      let n = nock(TEST_URL)
+        .put(route => route.match(pope(API.v1ServicesIdLanguage, { id: TEST_ID, language: "deu" })), blob => {
+          assert.deepEqual(blob, expectedRequestBody);
+          return true;
+        })
+        .reply(200, TEST_REPLY);
+
+      let response = await client.putLanguageBlob(TEST_ID, "deu", TEST_BLOB);
+      assert.equal(response, TEST_REPLY);
     });
   });
 });

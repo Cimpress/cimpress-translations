@@ -14,4 +14,9 @@ const findLanguageCode = language => {
   return languageByCode || getLanguageCodeFromEnglishName(language) || null;
 };
 
-module.exports = { findLanguageCode };
+const findLanguage = language => {
+  let languageCode = findLanguageCode(language);
+  return languageCode && iso_639_2[languageCode];
+};
+
+module.exports = { findLanguage, findLanguageCode };
