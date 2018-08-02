@@ -3,6 +3,7 @@ node_js:
 - '8'
 install:
 - npm install
+- npm i babel-cli -g
 script:
 - npm test
 deploy:

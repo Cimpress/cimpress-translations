@@ -4,7 +4,7 @@
   "description": "Lightweight client for the Translations Service",
   "main": "./lib/index.js",
   "scripts": {
-    "build": "node node_modules/babel-cli/bin/babel.js src -d lib",
+    "build": "babel src -d lib",
     "prepublish": "npm run build",
     "test": "jest"
   },
