@@ -5,7 +5,7 @@ const { pope } = require("pope");
 const httpStatus = require("http-status-codes");
 const jsonPatch = require("fast-json-patch");
 
-const { buildError } = require("./errors");
+const { buildError, buildErrorWithMessage } = require("./errors");
 const { findLanguage, findLanguageCode } = require("./language");
 
 const API = {
@@ -125,6 +125,11 @@ class CimpressTranslationsClient {
   }
 
   async patchStructure(serviceId, structurePatches) {
+    let error = jsonPatch.validate(structurePatches);
+    if (error) {
+      throw buildErrorWithMessage("EBADREQUEST", JSON.stringify(error))
+    }
+
     let options = {
       method: "PATCH",
       url: this.buildUrl(API.v1ServicesIdStructure, { id: serviceId }),
@@ -134,7 +139,7 @@ class CimpressTranslationsClient {
 
     await this.addAuth(options);
     return rp(options)
-      // .catch(requestCatch);
+      .catch(requestCatch);
   }
 
   async removeKeysFromStructure(serviceId, blob = {}) {

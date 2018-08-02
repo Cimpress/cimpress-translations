@@ -16,7 +16,23 @@ const TEST_ID = "TEST_ID";
 const TEST_LANGUAGE = "English";
 const TEST_BLOB = { testBlobKey: "testBlobValue" };
 const TEST_REPLY = "TEST_REPLY";
-const TEST_STRUCTURE = { testKey: "testValue" };
+const TEST_STRUCTURE_PATCHES = [
+  {
+    op: "add",
+    path: "/pages",
+    value: {
+      contact: {
+        name: "Contact page",
+        description: "The title of the contact page",
+        type: "singular"
+      }
+    }
+  },
+  {
+    op: "remove",
+    path: "/pages/home"
+  }
+];
 const client = new CimpressTranslationsClient(TEST_URL, () => null);
 
 describe("for CimpressTranslationsClient", () => {
@@ -139,12 +155,29 @@ describe("for CimpressTranslationsClient", () => {
   describe("for patchStructure()", () => {
     afterEach(nock.cleanAll);
 
+    it("throws EBADREQUEST if the structure patch is not a valid JSON patch", async () => {
+      let invalidJsonPatch = [
+        {
+          whatever: "whenever"
+        }
+      ];
+
+      try {
+        await client.patchStructure(TEST_ID, invalidJsonPatch);
+      } catch (error) {
+        assert.equal(error.name, "EBADREQUEST");
+      }
+    });
+
     it("returns the successful response", async () => {
       let n = nock(TEST_URL)
-        .patch(route => route.match(pope(API.v1ServicesIdStructure, {id: TEST_ID})), TEST_STRUCTURE)
+        .patch(route => route.match(pope(API.v1ServicesIdStructure, {id: TEST_ID})), body => {
+          assert.deepEqual(body, TEST_STRUCTURE_PATCHES);
+          return true;
+        })
         .reply(200, TEST_REPLY);
 
-      let response = await client.patchStructure(TEST_ID, TEST_STRUCTURE);
+      let response = await client.patchStructure(TEST_ID, TEST_STRUCTURE_PATCHES);
       assert.equal(response, TEST_REPLY);
     });
   });
@@ -176,11 +209,11 @@ describe("for CimpressTranslationsClient", () => {
       let expectedStructurePatches = [
         {
           op: "remove",
-          path: "/topLevelKey"
+          path: "/topLevelObject/secondLevelKey"
         },
         {
           op: "remove",
-          path: "/topLevelObject/secondLevelKey"
+          path: "/topLevelKey"
         }
       ];
 
@@ -192,7 +225,8 @@ describe("for CimpressTranslationsClient", () => {
         .patch(route => route.match(pope(API.v1ServicesIdStructure, {id: TEST_ID})), body => {
           assert.deepEqual(body, expectedStructurePatches);
           return true;
-        });
+        })
+        .reply(200, TEST_REPLY);
 
       let response = await client.removeKeysFromStructure(TEST_ID, localBlob);
       assert.equal(response, TEST_REPLY);
