@@ -7,7 +7,7 @@ script:
 - npm test
 deploy:
   provider: npm
-  email: igor@sowinski.blue
+  email: inovakov@cimpress.com
   on:
     branch: master
   skip_cleanup: true
