@@ -5,7 +5,7 @@
 cimpress-translations is a convenient client for Cimpress' Translations service.
 
 Features:
-- list and describe services; get language blobs for a language
+- list and describe services; modify a service structure; get and put language blobs for a language
 - pick language using ISO-639-2 ('eng', 'fra') or by passing the language's English name ('English', 'French')
 - supply authorization statically (using a hard-coded string) or dynamically (with a custom method)
 - convenience of a default service URL with the possibility of an override
@@ -66,6 +66,77 @@ console.log(service);
  *
 ```
 
+##### client.putLanguageBlob(serviceId, language, blob)
+Creates or updates the translation for a service in a given language. The language may be specified using ISO-639-2 ('eng', 'fra') or selected using its English name ('English', 'French').
+```javascript
+let blob = {
+  pages: {
+    home: "Home page"
+  }
+};
+await client.putLanguageBlob("28b1f0d2-9366-40cb-95bd-14de8c3adb9b", "English", blob);
+```
+
+##### client.patchStructure(serviceId, structurePatches)
+Patches the translations structure of a service. The patch should be in [JSON Patch format](http://jsonpatch.com/). The supported operations are add and remove.
+```javascript
+let structurePatches = [
+  {
+    op: "add",
+    path: "/pages",
+    value: {
+      contact: {
+        name: "Contact page",
+        description: "The title of the contact page",
+        type: "singular"
+      }
+    }
+  },
+  {
+    op: "remove",
+    path: "/pages/home"
+  }
+];
+await client.patchStructure("28b1f0d2-9366-40cb-95bd-14de8c3adb9b", structurePatches);
+```
+
+##### client.removeKeysFromStructure(serviceId, blob)
+Removes keys from the translations structure of a service. The keys to remove are determined based on the difference between the blob passed as the parameter and its remote counterpart stored in
+Cimpress' Translations service. Any keys which are not present in the passed blob will be removed from the translations structure.
+```javascript
+/**
+ * Remote blob
+ * {
+ *   blobId: "eng",
+ *   data: {
+ *     pages: {
+ *       home: "Home Page",
+ *       contact: "Contact Page"
+ *     }
+ *   }
+ * }
+ */
+
+let localBlob = {
+  data: {
+    blobId: "eng",
+    pages: {
+      home: "Home page"
+    }  
+  }
+};
+await client.removeKeysFromStructure("28b1f0d2-9366-40cb-95bd-14de8c3adb9b", localBlob);
+
+/** generates and applies the following patch to the service structure :
+ * [
+ *   {
+ *     op: "remove",
+ *     path: "/pages/contact"
+ *   }
+ * ]
+ */
+```
+
 ## Error handling
 
 Identify errors by checking their **name** property.
@@ -82,6 +153,9 @@ The service was not found of does not support this language.
 ##### ENOLANG
 The requested language was not found amongst languages specified in ISO-639-2.
 
+##### EBADREQUEST
+The provided body of the request contains one or multiple errors.
+
 ## Built With
 
 * [pope](https://github.com/poppinss/pope) - String templating engine
@@ -89,6 +163,7 @@ The requested language was not found amongst languages specified in ISO-639-2.
 * [https-status-codes](https://github.com/prettymuchbryce/node-http-status) - HTTP status codes
 * [jest](https://github.com/facebook/jest) - Node.js code testing framework
 * [iso-639](https://github.com/haliaeetus/iso-639) - ISO 639 language codes in a Node.js module
+* [fast-json-patch](https://github.com/Starcounter-Jack/JSON-Patch) - A leaner and meaner implementation of JSON-Patch.
 
 ## Contributing
 
