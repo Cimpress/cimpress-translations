@@ -1,11 +1,10 @@
 {
   "name": "cimpress-translations",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Lightweight client for the Translations Service",
   "main": "./lib/index.js",
   "scripts": {
-    "build": "babel src -d lib",
-    "prepublish": "npm run build",
+    "build": "node ./node_modules/babel-cli/bin/babel.js src -d lib",
     "test": "jest"
   },
   "repository": {
