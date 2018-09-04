@@ -17,4 +17,4 @@ const buildError = (name, message) => {
   return err;
 };
 
-module.exports = Object.assign(errors, {buildError, buildErrorWithMessage});
+module.exports = Object.assign(errors, { buildError });

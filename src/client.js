@@ -127,7 +127,7 @@ class CimpressTranslationsClient {
   async patchStructure(serviceId, structurePatches) {
     let error = jsonPatch.validate(structurePatches);
     if (error) {
-      throw buildErrorWithMessage("EBADREQUEST", JSON.stringify(error))
+      throw buildError("EBADREQUEST", JSON.stringify(error))
     }
 
     let options = {
