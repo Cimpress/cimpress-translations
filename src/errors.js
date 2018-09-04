@@ -8,16 +8,12 @@ const errors = {
   "EBADREQUEST": "The provided request body contains one or multiple errors."
 };
 
-const buildError = name => {
+const buildError = (name, message) => {
   let err = new Error(errors[name]);
   err.name = name;
-  return err;
-};
-
-const buildErrorWithMessage = (name, message) => {
-  let err = new Error(errors[name]);
-  err.name = name;
-  err.message = message;
+  if (message) {
+    err.message = message;
+  }
   return err;
 };
 
