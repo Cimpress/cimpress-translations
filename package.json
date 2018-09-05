@@ -1,6 +1,6 @@
 {
   "name": "cimpress-translations",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Lightweight client for the Translations Service",
   "main": "./lib/index.js",
   "files": [
