@@ -5,7 +5,7 @@ const { pope } = require("pope");
 const httpStatus = require("http-status-codes");
 const jsonPatch = require("fast-json-patch");
 
-const { buildError, buildErrorWithMessage } = require("./errors");
+const { buildError } = require("./errors");
 const { findLanguage, findLanguageCode } = require("./language");
 
 const API = {
@@ -18,14 +18,14 @@ const API = {
 
 const requestCatch = err => {
   if (err && err.statusCode === httpStatus.NOT_FOUND) {
-    throw buildError("ENOTFOUND");
+    throw buildError("ENOTFOUND", err.message);
   }
 
   if (err && [httpStatus.UNAUTHORIZED, httpStatus.FORBIDDEN].includes(err.statusCode)) {
-    throw buildError("ENOACCESS");
+    throw buildError("ENOACCESS", err.message);
   }
 
-  throw buildError("EGENERIC");
+  throw buildError("EGENERIC", err.message);
 };
 
 class CimpressTranslationsClient {
@@ -127,7 +127,7 @@ class CimpressTranslationsClient {
   async patchStructure(serviceId, structurePatches) {
     let error = jsonPatch.validate(structurePatches);
     if (error) {
-      throw buildErrorWithMessage("EBADREQUEST", JSON.stringify(error))
+      throw buildError("EBADREQUEST", JSON.stringify(error))
     }
 
     let options = {
