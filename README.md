@@ -6,7 +6,7 @@ cimpress-translations is a convenient client for Cimpress' Translations service.
 
 Features:
 - list and describe services; modify a service structure; get and put language blobs for a language
-- pick language using ISO-639-2 ('eng', 'fra') or by passing the language's English name ('English', 'French')
+- pick language using ISO-639-2 ('eng', 'fra') or ISO-639-1 ('en', 'fr') or by passing the language's English name ('English', 'French')
 - supply authorization statically (using a hard-coded string) or dynamically (with a custom method)
 - convenience of a default service URL with the possibility of an override
 
@@ -55,7 +55,7 @@ console.log(service);
 ```
 
 ##### client.getLanguageBlob(serviceId, language)
-Retrieves the translation for a service in a given language. The language may be specified using ISO-639-2 ('eng', 'fra') or selected using its English name ('English', 'French').
+Retrieves the translation for a service in a given language. The language may be specified using ISO-639-2 ('eng', 'fra') or ISO-639-1 ('en', 'fr') or selected using its English name ('English', 'French').
 ```javascript
 let services = await client.getLanguageBlob("28b1f0d2-9366-40cb-95bd-14de8c3adb9b", "French");
 console.log(service);
