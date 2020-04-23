@@ -1,6 +1,6 @@
 "use strict";
 
-const { iso_639_2 } = require("iso-639");
+const { iso_639_1, iso_639_2 } = require("iso-639");
 
 const getLanguageCodeFromEnglishName = language => {
   let foundLanguage = Object.values(iso_639_2).find(entry => entry.en
@@ -10,8 +10,9 @@ const getLanguageCodeFromEnglishName = language => {
 };
 
 const findLanguageCode = language => {
-  let languageByCode = (iso_639_2[language] || {})["639-2"];
-  return languageByCode || getLanguageCodeFromEnglishName(language) || null;
+  let languageByThreeLetterCode = (iso_639_2[language] || {})["639-2"];
+  let languageByTwoLetterCode = (iso_639_1[language] || {})["639-2"];
+  return languageByThreeLetterCode || languageByTwoLetterCode || getLanguageCodeFromEnglishName(language) || null;
 };
 
 const findLanguage = language => {

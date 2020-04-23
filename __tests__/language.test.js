@@ -25,6 +25,21 @@ describe("for language utility module", () => {
       });
     });
 
+    it("returns ISO 639-2 code of language given ISO 639-1 code", () => {
+      let testLanguages = {
+        "en": "eng",
+        "fr": "fra",
+        "de": "deu",
+        "nl": "nld",
+        "sk": "slk",
+        "tr": "tur"
+      };
+
+      Object.entries(testLanguages).map(l => {
+        assert.equal(language.findLanguageCode(l[0]), l[1]);
+      });
+    });
+
     it("returns ISO 639-2 code of language given English name of language", () => {
       let testLanguages = {
         "English": "eng",
